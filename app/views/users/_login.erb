@@ -1,0 +1,23 @@
+<div id="login-wraper_out">
+  <div id="login-wraper">
+    <%= form_for @user, :url=>login_users_path do |f| %>
+
+      <legend>Sign in to <span class="blue">Music</span></legend>
+
+      <div class="body">
+        <label>Email</label>
+        <%= f.text_field :email %>
+
+        <label>Password</label>
+        <%= f.password_field :password %>
+      </div>
+
+      <div class="footer">
+        <%= f.submit "Login" , :class=>"btn btn-primary" %>
+      </div>
+    <% end %>
+    <div class="up_line">
+      <%= link_to "Forgot Password", forgot_password_users_path, :class=>"blue-font" %>
+    </div>
+  </div>
+</div>

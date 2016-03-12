@@ -1,0 +1,4 @@
+<%= render 'new' %>
+<div class="white navbar-fixed-bottom">
+  Already registered? <%= link_to "Login",login_users_path , :remote => true, :class=>"btn btn-black", :id=>"signin", :onclick=>"login_show(); return false;" %>
+</div>

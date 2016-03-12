@@ -1,0 +1,29 @@
+<%= form_for @music_album, :url=>musics_path do |f| %>
+  <div class="body">
+    <label>Select Album</label>
+    <%= f.select :id, [["New Album", ""]] + @music_albums.map{|m| [m.name, m.id]}, {},:onChange=>"show_hide_new(this.value)" %>
+    <div id="new_album">
+      <label>Album Name</label>
+      <%= f.text_field :name %>
+      <label>Album Cover</label>
+      <%= f.file_field :cover %>
+    </div>
+  </div>
+  <div class="footer">
+    <%= f.submit "Continue" , :class=>"btn btn-success" %>
+  </div>
+<% end %>
+<script type="text/javascript">
+  function show_hide_new(vl)
+  {
+    if(vl=="")
+    {
+      $("#new_album").show();
+    }
+    else
+    {
+      $("#new_album").hide();
+    }
+  }
+  show_hide_new($("#music_album_id").val())
+</script>

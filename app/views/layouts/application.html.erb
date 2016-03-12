@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+  <head>
+    <title>Music</title>
+    <%= stylesheet_link_tag    "application", :media => "all" %>
+    <%= stylesheet_link_tag    "bootstrap", :media => "all" %>
+    <%= stylesheet_link_tag    "bootstrap-responsive.min", :media => "all" %>
+    <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "jquery-ui" %>
+    <%= javascript_include_tag "notify.min" %>
+    <%= csrf_meta_tags %>
+    <link rel="shortcut icon" href="/assets/Music_icon.png" type="image/png" />
+  </head>
+  <body>
+    <table style="width:100%;height:100%; display: none; position: fixed; z-index: 10000; background-color: rgba(0,0,0,0.6);" cellspacing="0" cellpadding="0" id="backend">
+      <tr>
+        <td align="center" style="vertical-align:middle;">
+
+          <div id="backend_div">
+            <div id="close" onclick="backend_hide()">
+              <%= image_tag "close.png"%>
+            </div>
+            <div id="backend_div_content">
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <table style="width:100%;height:100%" cellspacing="0" cellpadding="0">
+      <tr>
+        <td align="center" style="height: 100%;">
+          <div id="header">
+            <div style="float:left; margin-left:5px;">
+              <%= image_tag "Music.png", :style=>"float:left; height: 40px;" %>
+            </div>
+            <% if @current_user.present? %>
+              <div class="navbar-header pull-right" role="navigation">
+                <ul class="nav ace-nav">
+                  <li class="light-blue">
+                    <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                      <% if @current_user.image.present? %>
+                        <%= image_tag @current_user.image_url(:thumb) , :class=>"nav-user-photo" %>
+                      <% else %>
+                        <%= image_tag "user.png" , :class=>"nav-user-photo" %>
+                      <% end %>
+                      <span class="user-info">
+                        <small>Welcome,</small>
+                        <%= @current_user.name %>
+                      </span>
+
+                      <i class="icon-caret-down"></i>
+                    </a>
+
+                    <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+                      <% if @current_user.is_admin==true %>
+                        <li>
+                          <a href="#">
+                            <i class="icon-cog"></i>
+                            Settings
+                          </a>
+                        </li>
+                      <% end %>
+                      <li>
+                        <%= link_to "<i class='icon-user'></i>Profile".html_safe, user_path(@current_user.id), :remote=>true, :id=>"profile" %>
+                      </li>
+
+                      <li class="divider"></li>
+
+                      <li>
+                        <%= link_to "<i class='icon-off'></i>Logout".html_safe, logout_users_path %>
+                      </li>
+                    </ul>
+                  </li>
+                </ul><!-- /.ace-nav -->
+              </div>
+
+            <% end %>
+          </div>
+          <div id="content">
+            <%= yield %>
+          </div>
+        </td>
+      </tr>
+    </table>
+    <% if flash[:notice] %>
+      <script type="text/javascript">
+        $.notify("<%=  flash[:notice] %>", "success");
+      </script>
+      <% flash[:notice]=nil %>
+    <% end %>
+    <% if flash[:alert] %>
+      <%= flash[:alert] %>
+      <script type="text/javascript">
+        $.notify("<%= flash[:alert] %>", "error");
+      </script>
+      <% flash[:alert]=nil %>
+    <% end %>
+    <script type="text/javascript">
+      $('#profile').bind('ajax:complete', function(et, e) {
+        $("#backend_div_content").html(e.responseText);
+        backend_show();
+      });
+      function backend_show()
+      {
+        $('#backend').show();
+      }
+      function backend_hide()
+      {
+        $('#backend').hide();
+      }
+    </script>
+  </body>
+</html>

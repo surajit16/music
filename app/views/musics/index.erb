@@ -1,0 +1,28 @@
+<style>
+  #content{
+    float: left;
+    width: 100%;
+    height: 100%;
+  }
+  .vertical_top tr td{
+    vertical-align: top;
+  }
+</style>
+<table class="width_100 height_100 float_left vertical_top" border="1" style="">
+  <tr>
+    <td colspan="3" style="height:45px;"></td>
+  </tr>
+  <tr>
+    <td style="width:300px;">
+      <div class="width_100 height_100 float_left" id="album_names">
+        <%= render :partial=>'album_names' %>
+      </div>
+    </td>
+    <td>
+      <div id="album_details"></div>
+    </td>
+    <td style="width:150px;">
+
+    </td>
+  </tr>
+</table>

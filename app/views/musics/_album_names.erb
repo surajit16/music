@@ -1,0 +1,56 @@
+<style>
+  .btn-black {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 5px 20px;
+    background-color: #222222;
+    background-image: none;
+    color: white;
+    text-shadow: none;
+  }
+  .btn-black:hover {
+    background: #333333;
+    color: white;
+  }
+</style>
+<div class="width_100 height_100 float_left">
+  <div class="width_100 float_left">
+    <%= link_to "New Album", new_music_path, :target=>"_blank", :style=>"color:#222222;", :class=>"float_left" %>
+    <%= link_to "Refresh", new_music_path, :target=>"_blank", :style=>"color:#222222;", :class=>"float_right" %>
+  </div>
+  <% @music_albums.each do |album| %>
+    <div class="width_100 float_left">
+      <%= link_to album.name, "#music_id=#{album.id}", :onclick=>"load_music('#music_id=#{album.id}')" %>
+    </div>
+  <%end  %>
+</div>
+<script type="text/javascript">
+  function load_music(request_data)
+  {
+    request_data=request_data.replace("#", "");
+    send_hash_request("<%= show_album_musics_path %>",request_data, "album_details");
+  }
+  function send_hash_request(url_data, request_data, div_update)
+  {
+    $.ajax({
+      type: "GET",
+      url: url_data,
+      data: { request: request_data }
+    })
+    .done(function(html_data) {
+      console.log("#"+div_update)
+      console.log($("#"+div_update));
+      $("#"+div_update).html(html_data);
+    });
+  }
+  function window_reload()
+  {
+    var hash_obj=window.location.hash;
+    if(hash_obj!="")
+    {
+      //send_hash_request(hash_obj);
+    }
+  }
+  window_reload();
+</script>

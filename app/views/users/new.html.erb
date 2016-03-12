@@ -1,0 +1,45 @@
+<style>
+  body{
+    background-image:url('/assets/dj-sound-wallpaper.jpg');
+    background-color:#fff;
+    background-attachment: fixed;
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+  }
+  .btn-black {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    padding: 5px 20px;
+    background-color: #222222;
+    background-image: none;
+    color: white;
+    text-shadow: none;
+  }
+  .btn-black:hover, .btn-black:active, .btn-black:focus {
+    background: #333333;
+    color: white;
+  }
+</style>
+<div id="login" style="display:none;"></div>
+<div id="signup" style="display:block;">
+  <%= render 'new' %>
+  <div class="white navbar-fixed-bottom">
+    Already registered? <%= link_to "Login",login_users_path , :remote => true, :class=>"btn btn-black", :id=>"signin" %>
+  </div>
+</div>
+<script type="text/javascript">
+  function signup_show()
+  {
+    $('#login').hide();
+    var options = {};
+    $( "#signup" ).effect( "bounce", options, 500, "" );
+  }
+  
+  $('#signin').bind('ajax:complete', function(et, e) {
+    $('#signup').hide();
+    $("#login").html(e.responseText);
+    var options = {};
+    $( "#login" ).effect( "bounce", options, 500, "" );
+  });
+</script>

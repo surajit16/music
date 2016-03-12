@@ -1,0 +1,16 @@
+<legend><%= @user.name %></legend>
+<div class="body" style="margin-bottom: 8px;">
+  <label>
+    <%= @user.email %>
+  </label>
+  <% if @user.image.present? %>
+  <%= image_tag @current_user.image_url(:thumb) , :class=>"nav-user-photo" %>
+  <% else %>
+    <%= image_tag "user.png" , :class=>"nav-user-photo" %>
+  <% end %>
+</div>
+
+<div class="up_line">
+  <%= link_to "Change Password", change_password_user_path(@user), :class=>"btn btn-warning", :target=>"_blank", :onclick=>"backend_hide()" %>
+  <%= link_to "Edit", edit_user_path(@user), :class=>"btn btn-primary", :target=>"_blank", :onclick=>"backend_hide()" %>
+</div>
